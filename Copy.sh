@@ -1,7 +1,7 @@
 #!/bin/sh
-#coding:utf-8
+# coding:utf-8
 
-# copy function
+# コピー関数
 Copyfunc(){
     if [ -e $2 ]; then # file found, or not
         echo "$2 copying..."
@@ -11,10 +11,17 @@ Copyfunc(){
     fi
 }
 
-# 保存先
-dir=$(date "+%Y%m%d_%H%M%S")
-mkdir -p $dir/usr $dir/glb
-cd $dir
+# アーカイブファイル出力先
+out_dir=$(dirname $(readlink -f $0))
+
+# tempディレクトリ作成
+tmp_dir=$(mktemp -d)
+
+# サブディレクトリ追加
+mkdir -p $tmp_dir/usr $tmp_dir/glb
+
+# temp dirに移動
+cd $tmp_dir
 
 # bashrc
 echo -n "copy config on bash. (Y/n)"
@@ -28,6 +35,7 @@ case $flag in
         Copyfunc glb /etc/profile
     ;;
 esac
+echo
 
 # rc.local
 echo -n "copy rc.local. (Y/n)"
@@ -37,9 +45,10 @@ case $flag in
         Copyfunc glb /etc/rc.local
     ;;
 esac
+echo
 
 # vim
-echo "copy vim. (Y/n)"
+echo -n "copy vim. (Y/n)"
 read flag
 case $flag in
     "Y" | "y")
@@ -51,6 +60,28 @@ case $flag in
         Copyfunc glb /etc/gvimrc
     ;;
 esac
-cd ../
+echo
+
+# アーカイブファイル作成
+filename=$(date "+%Y%m%d_%H%M%S").tar.gz # ファイル名
+
+echo "create archive file"
+echo "$tmp_dir -> $filename"
+echo -n "(press any key)"
+read ""
+# アーカイブ
+tar -czf $filename ./*
+
+# 移動
+mv $filename $out_dir
+
+# tmp 削除
+rm -rf $tmp_dir
+
+# 解凍
+#cd $out_dir
+#tar -xzf $filename
+
 # finish
-echo "Done"
+echo
+echo 'Done'
