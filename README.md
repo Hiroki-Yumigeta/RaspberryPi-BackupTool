@@ -11,5 +11,5 @@ OSを壊したときように設定ファイルのバックアップを円滑に
 (.bashrc, .bash_profile, .bash_aliases, /etc/bashrc, /etc/profile, /etc/rc.local)
 
 ## 使い方
-* 以下のスクリプトを実行する
-- Copy.sh
+以下のスクリプトを実行する
+* Copy.sh
