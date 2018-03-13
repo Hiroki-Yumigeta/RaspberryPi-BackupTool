@@ -8,11 +8,8 @@ OSを壊したときように設定ファイルのバックアップを円滑に
 (.vimrc, .gvimrc, /etc/vimrc, /etc/gvimrc)
 
 * **シェル**の設定ファイル
-(.bashrc, .bash_profile, /etc/bashrc, /etc/profile, /etc/rc.local)
+(.bashrc, .bash_profile, .bash_aliases, /etc/bashrc, /etc/profile, /etc/rc.local)
 
 ## 使い方
 * 以下のスクリプトを実行する
-
-1. All.sh       -- **vim** **シェル** のコピー
-2. copy-vim.sh  -- **vim** のみ
-2. copy-bash.sh -- **シェル** のみ
+- Copy.sh
